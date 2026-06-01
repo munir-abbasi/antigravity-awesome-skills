@@ -16,54 +16,104 @@ if sys.platform == 'win32':
 
 
 CATEGORY_KEYWORDS = {
-    "web-engineering": [
-        "react", "vue", "angular", "svelte", "nextjs", "tailwind", "frontend",
-        "html", "css", "browser", "web", "dom", "accessibility", "seo",
-    ],
-    "backend": [
-        "backend", "api", "server", "fastapi", "django", "flask", "express",
-        "spring", "node", "golang", "rust", "php", "laravel",
-    ],
-    "database": [
-        "database", "sql", "postgres", "mysql", "mongodb", "redis", "dynamodb",
-        "orm", "schema", "query",
-    ],
-    "ai-ml": [
-        "llm", "gpt", "ai", "machine learning", "deep learning", "pytorch",
-        "tensorflow", "embedding", "rag", "transformer", "model",
-    ],
-    "cloud-devops": [
-        "docker", "kubernetes", "k8s", "ci/cd", "github actions", "terraform",
-        "ansible", "aws", "azure", "gcp", "deployment", "devops", "serverless",
-    ],
-    "security": [
-        "security", "owasp", "audit", "vulnerability", "threat", "penetration",
-        "authentication", "authorization", "jwt", "oauth", "compliance",
-    ],
-    "testing-qa": [
-        "test", "testing", "pytest", "jest", "cypress", "playwright", "quality",
-        "regression", "coverage", "e2e",
-    ],
-    "mobile": [
-        "android", "ios", "react native", "flutter", "swift", "kotlin", "mobile",
-    ],
-    "data-engineering": [
-        "etl", "pipeline", "airflow", "spark", "warehouse", "analytics", "data",
-    ],
-    "research": [
-        "research", "manuscript", "systematic review", "meta-analysis", "grade",
-        "consort", "prisma", "study",
-    ],
-    "bioinformatics": [
-        "genomics", "proteomics", "rna", "sequencing", "variant", "phylogenetics",
-        "biopython", "single-cell", "biomedical",
-    ],
-    "geospatial": [
-        "geospatial", "gis", "spatial", "remote sensing", "raster", "vector",
-    ],
-    "finance": [
-        "finance", "trading", "portfolio", "risk", "market", "economic", "treasury",
-    ],
+    "agency": ["agency-", "agency"],
+    "ai-agent": ["agent-", "multi-agent", "agentic", "autonomous-agent", "subagent", "browser-automation"],
+    "ai-api": ["fal-", "hugging-face", "stability-ai", "vercel-ai", "ai-api", "api-platform", "model-api"],
+    "ai-llm": ["llm-", "prompt-", "gemini-", "gpt-", "claude-", "foundation model", "foundation models"],
+    "ai-memory": ["agent-memory", "persistent-memory", "memory-systems", "conversation-memory", "mesh-memory", "hierarchical-agent-memory"],
+    "ai-rag": ["rag-", "embedding-", "vector-", "hybrid-search", "similarity-search", "retrieval augmented generation", "retrieval-augmented generation"],
+    "ai-voice": ["voice-", "audio-", "speech-to-text", "podcast-generation", "game-audio"],
+    "ai-ml": ["machine-learning", "machine learning", "deep-learning", "deep learning", "neural-network", "ml-pipeline", "ai-model", "computer-vision", "natural-language", "transformers-", "transformer", "ai-", "pytorch", "tensorflow", "nlp-", "kaggle-"],
+    "api-integration": ["api-", "api", "graphql-", "rest-", "webhook-", "mcp-", "sdk-", "connector-", "integration-"],
+    "automation": ["automation-", "automate-", "continuous-"],
+    "backend": ["backend-", "backend", "fastapi-", "django-", "nestjs-", "express-", "springboot", "ktor-", "rails-", "laravel-", "microservice-", "grpc-", "server", "servers"],
+    "bioinformatics": ["genomics", "proteomics", "biopython", "bioinformatics", "single-cell", "phylogenetic", "metabolomics", "rna-", "gene-"],
+    "cloud-devops": ["azure-", "azure", "aws-", "aws", "gcp-", "gcp", "cloud-", "kubernetes-", "kubernetes", "docker-", "docker", "terraform-", "terraform", "helm-", "serverless-", "deployment-", "devops", "github actions", "network-"],
+    "content": ["content-", "content", "writing-", "writing", "blog-", "proofread-", "editorial-", "article-", "readme-", "crosspost-", "content-engine", "hackernews-", "wiki-"],
+    "data": ["analytics-", "analytics", "analysis-", "statistical-", "dataset-", "forecast-", "visualization-", "inventory-", "eda-"],
+    "data-engineering": ["etl-", "etl", "airflow-", "airflow", "spark-", "spark", "dbt-", "pipeline-", "pipeline", "warehouse-", "warehouse", "lakehouse", "data-engineering", "data-scraper"],
+    "database-processing": ["database-", "database", "postgres-", "postgres", "mysql-", "mongo-", "redis-", "sql-", "sql", "prisma-", "drizzle-", "orm-", "orm", "clickhouse-", "neon-", "schema"],
+    "design": ["design-", "design", "ui-ux", "shadcn", "tailwind-", "glassmorphism", "neumorphism", "brutalism", "bento-grid", "typography-", "color-palette", "ux-guidelines", "accessibility-", "accessibility"],
+    "development": ["development", "developer", "engineering", "software"],
+    "document-processing": ["docx-", "pdf-", "writer-", "word-", "markitdown", "nutrient-", "visa-doc"],
+    "finance": ["finance-", "finance", "trading-", "portfolio-", "risk-", "accounting-", "accounting", "economic-", "alpha-vantage", "energy-procurement", "customs-trade"],
+    "framework": ["framework-", "best-practices", "patterns-"],
+    "frontend": ["react-", "react", "vue-", "vue", "angular-", "angular", "svelte-", "nextjs-", "nextjs", "nuxt-", "frontend-", "frontend", "astro-", "storybook", "liquid-glass", "html", "css", "dom", "browser"],
+    "game-development": ["godot-", "unity-", "unreal-", "3d-", "2d-", "multiplayer-engine", "vr-"],
+    "geospatial": ["gis-", "geospatial", "remote-sensing", "landsat", "sentinel", "spatial", "raster", "vector"],
+    "graphics-processing": ["image-", "diagram-", "mermaid-", "threejs-", "shader-", "canvas-", "svg-", "infographic"],
+    "management": ["plan-", "plan", "review-", "retro-", "ceo-", "gstack", "team-builder", "council-", "advisor-", "decision-making"],
+    "marketing": ["seo-", "seo", "marketing-", "marketing", "growth-", "keyword-research", "ad-creative", "brand-", "cro-", "campaign-", "investor-outreach", "aeo-", "blog-writer", "content-quality", "copywriting"],
+    "media": ["video-", "audio-", "youtube-", "transcript-", "videodb", "fal-ai-media"],
+    "meta": ["meta-", "orchestrator-", "router-", "context-", "blueprint-", "configure-", "workflow-", "obsidian-"],
+    "mobile": ["swiftui-", "android-", "android", "kotlin-", "flutter-", "react-native", "expo-", "jetpack-compose", "ios-", "ios", "mobile"],
+    "presentation-processing": ["pptx-", "presentation-", "slides-", "beamer-", "impress-"],
+    "productivity": ["superpower-", "workflow-", "dispatch-", "search-first"],
+    "research": ["research-", "research", "deep-research", "pubmed", "openalex", "scholar", "exa-search", "iterative-retrieval", "systematic-review", "systematic review", "meta-analysis", "study"],
+    "security": ["security-", "security", "pentest-", "vulnerability-", "owasp-", "forensics-", "threat-", "audit-", "ffuf-", "keccak256", "authentication", "authorization", "jwt", "oauth", "compliance"],
+    "spreadsheet-processing": ["xlsx-", "excel-", "spreadsheet-", "csv-", "calc-"],
+    "testing-qa": ["testing-", "testing", "playwright-", "cypress-", "pytest-", "jest-", "qa-", "qa", "tdd-", "eval-", "verification-", "e2e-", "benchmark-", "regression", "coverage"],
+    "workflow-bundle": ["workflow-bundle", "workflow-bundles"],
+}
+
+ID_PREFIX_CATEGORY_MAP = {
+    "agency": "agency",
+    "agent": "ai-agent",
+    "rag": "ai-rag",
+    "embedding": "ai-rag",
+    "vector": "ai-rag",
+    "llm": "ai-llm",
+    "prompt": "ai-llm",
+    "gemini": "ai-llm",
+    "gpt": "ai-llm",
+    "claude": "ai-llm",
+    "voice": "ai-voice",
+    "audio": "ai-voice",
+    "azure": "cloud-devops",
+    "aws": "cloud-devops",
+    "gcp": "cloud-devops",
+    "cloud": "cloud-devops",
+    "seo": "marketing",
+    "marketing": "marketing",
+    "brand": "marketing",
+    "design": "design",
+    "react": "frontend",
+    "vue": "frontend",
+    "angular": "frontend",
+    "nextjs": "frontend",
+    "svelte": "frontend",
+    "fastapi": "backend",
+    "django": "backend",
+    "backend": "backend",
+    "swiftui": "mobile",
+    "android": "mobile",
+    "kotlin": "mobile",
+    "flutter": "mobile",
+    "godot": "game-development",
+    "unity": "game-development",
+    "unreal": "game-development",
+    "database": "database-processing",
+    "postgres": "database-processing",
+    "sql": "database-processing",
+    "api": "api-integration",
+    "automation": "automation",
+    "research": "research",
+    "testing": "testing-qa",
+    "security": "security",
+    "finance": "finance",
+    "accounting": "finance",
+    "content": "content",
+    "writing": "content",
+    "video": "media",
+    "pdf": "document-processing",
+    "docx": "document-processing",
+    "pptx": "presentation-processing",
+    "xlsx": "spreadsheet-processing",
+    "image": "graphics-processing",
+    "mermaid": "graphics-processing",
+    "meta": "meta",
+    "context": "meta",
+    "workflow": "meta",
 }
 
 STOPWORD_TOKENS = {
@@ -100,9 +150,13 @@ def infer_dynamic_category(skill_id):
     ]
     tokens = [token for token in raw_tokens if token not in STOPWORD_TOKENS and len(token) >= 3]
 
+    if tokens:
+        mapped_category = ID_PREFIX_CATEGORY_MAP.get(tokens[0])
+        if mapped_category:
+            return mapped_category, 0.56, f"derived-from-id-prefix:{tokens[0]}"
+
     if len(tokens) >= 2 and tokens[0] in {
-        "azure", "aws", "google", "github", "gitlab", "slack", "discord", "shopify",
-        "wordpress", "odoo", "notion", "expo", "react", "nextjs", "kubernetes",
+        "github", "gitlab", "slack", "discord", "shopify", "wordpress", "odoo", "notion",
     }:
         category = normalize_category(f"{tokens[0]}-{tokens[1]}")
         if category:
@@ -113,7 +167,7 @@ def infer_dynamic_category(skill_id):
         if category:
             return category, 0.34, f"derived-from-id-token:{tokens[-1]}"
 
-    return "general", 0.20, "fallback:general"
+    return "development", 0.20, "fallback:development"
 
 
 def infer_category(skill_info, metadata, body_text):
@@ -144,7 +198,7 @@ def infer_category(skill_info, metadata, body_text):
         score = 0
         hits = []
         for keyword in keywords:
-            if re.search(r"\\b" + re.escape(keyword) + r"\\b", combined_text):
+            if re.search(r"\b" + re.escape(keyword) + r"\b", combined_text):
                 score += 3
                 hits.append(keyword)
             elif len(keyword) >= 5 and keyword in combined_text:
