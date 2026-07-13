@@ -35,6 +35,26 @@ Specialized workflow for creating WordPress plugins with proper architecture, ho
    - Register blocks without JavaScript
    - Auto-generated Inspector controls
 
+6. **Block Bindings API (PHP callbacks)**
+   - Connect block attributes to dynamic PHP data sources
+   - Register bindings via `register_block_bindings_source()`
+   - Works with core blocks (paragraph, heading, image, button)
+   - No JavaScript required for custom data sources
+
+7. **Script Module I18n**
+   - `wp_set_script_module_translations()` for script modules
+   - Works with `@wordpress/i18n` in block editor
+   - Import map compatible
+
+8. **`WP_REST_Icons_Controller`**
+   - REST API endpoint for icon management: `/wp/v2/icons`
+   - Register custom icon sets via `wp_register_icon_set()`
+   - Supports SVG icons with built-in validation
+
+9. **`rest_block_hooks_post_types` Filter**
+   - Control which post types auto-insert hooked blocks
+   - Filter available since WP 7.0
+
 
 ## Workflow Phases
 
@@ -403,6 +423,74 @@ addFilter(
 );
 ```
 
+#### WP 7.0 Feature Detection & Connector Setup
+```php
+// Check if AI is available with wp_supports_ai()
+if (function_exists('wp_supports_ai') && wp_supports_ai()) {
+    // AI features are available — register connectors, abilities, etc.
+}
+
+// Register a custom AI connector (wp_connectors_init)
+add_action('wp_connectors_init', function($connectors_manager) {
+    $connectors_manager->register('my-connector', [
+        'name' => 'My Custom AI',
+        'description' => __('Custom AI provider integration', 'my-plugin'),
+        'icon' => 'dashicons-admin-generic',
+        'fields' => [
+            'api_key' => ['type' => 'password', 'label' => 'API Key'],
+            'model'   => ['type' => 'select', 'label' => 'Model', 'options' => ['gpt-4', 'gpt-3.5']],
+        ],
+    ]);
+});
+
+// Note: plugin.file must be declared in plugin header for connector registration
+// Plugin header:
+// Requires PHP: 8.4
+// plugin.file: my-plugin.php
+```
+
+#### Block Bindings API (PHP Data Sources)
+```php
+// Register a dynamic data source for block bindings (WP 7.0)
+add_action('init', function() {
+    if (!function_exists('register_block_bindings_source')) {
+        return;
+    }
+    
+    register_block_bindings_source('my-plugin/custom-meta', [
+        'label'              => __('Custom Meta Field', 'my-plugin'),
+        'uses_context'       => ['postId'],
+        'get_value_callback' => function($source_args, $block_context, $attributes) {
+            $post_id = $block_context['postId'] ?? 0;
+            if (!$post_id) return '';
+            
+            $field = $source_args['key'] ?? '';
+            if (!$field) return '';
+            
+            return get_post_meta($post_id, $field, true);
+        },
+    ]);
+});
+
+// Usage in block editor: anchor's bindings attribute connects
+// a block attribute to a registered source.
+// Example: <!-- wp:paragraph {"metadata":{"bindings":{"content":{"source":"my-plugin/custom-meta","args":{"key":"_subtitle"}}}}} -->
+```
+
+#### Script Module Translations (WP 7.0)
+```php
+// In PHP: load translations for a script module
+add_action('enqueue_block_editor_assets', function() {
+    // Register script modules
+    wp_register_script_module('my-plugin/editor', plugin_dir_url(__FILE__) . 'build/editor.js');
+    
+    // Load translations — replaces deprecated wp_set_script_translations() for modules
+    if (function_exists('wp_set_script_module_translations')) {
+        wp_set_script_module_translations('my-plugin/editor', 'my-plugin');
+    }
+});
+```
+
 ### Phase 9: Testing
 
 #### Skills to Invoke
@@ -465,6 +553,12 @@ plugin-name/
 - [ ] Interactivity API uses `watch()` not `effect`
 - [ ] Tested with iframed editor
 - [ ] Collaboration fallback works (post locking)
+- [ ] PHP 8.4+ requirement documented (`Requires PHP: 8.4`)
+- [ ] `plugin.file` declared in plugin header if using AI Connector
+- [ ] AI Connector integration tested (check `wp_supports_ai()`)
+- [ ] Block Bindings API tested for dynamic data sources
+- [ ] Script module translations working (`wp_set_script_module_translations`)
+- [ ] Rest API icons controller tested (if applicable)
 
 
 ## Quality Gates
